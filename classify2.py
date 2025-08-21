@@ -10,13 +10,12 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
 st.set_page_config(page_title="GeoHackers Land Classification", layout="wide")
-st.title("🌍 Team GeoHackers")
-st.markdown("### 🛰️ Land Use Classification and Visualization Tool")
+st.title(" 🛰️ Land Use Classification and Visualization Tool")
 
 # --- File uploads ---
-st.sidebar.header("📁 Upload your data")
-raster_file = st.sidebar.file_uploader("🌐 Upload satellite raster (GeoTIFF)", type=["tif", "tiff"])
-shapefile_file = st.sidebar.file_uploader("🗂️ Upload training shapefile (.zip)", type=["zip"])
+st.sidebar.header(" Upload your data")
+raster_file = st.sidebar.file_uploader(" Upload satellite raster (GeoTIFF)", type=["tif", "tiff"])
+shapefile_file = st.sidebar.file_uploader(" Upload training shapefile (.zip)", type=["zip"])
 
 if raster_file and shapefile_file:
     import tempfile
@@ -33,7 +32,7 @@ if raster_file and shapefile_file:
 
             shp_path = next((os.path.join(tmpdir, f) for f in os.listdir(tmpdir) if f.endswith(".shp")), None)
             if not shp_path:
-                st.error("❌ No .shp file found in the uploaded zip.")
+                st.error(" No .shp file found in the uploaded zip.")
                 st.stop()
 
             gdf = gpd.read_file(shp_path)
@@ -46,10 +45,10 @@ if raster_file and shapefile_file:
             possible_class_columns = ['classname', 'classvalue', 'class', 'class_value', 'label', 'landuse', 'type']
             class_column = next((col for col in possible_class_columns if col in gdf.columns), None)
             if class_column is None:
-                st.error(f"❌ Class column not found! Available columns: {list(gdf.columns)}")
+                st.error(f" Class column not found! Available columns: {list(gdf.columns)}")
                 st.stop()
 
-            st.success(f"✅ Using '{class_column}' column as class labels.")
+            st.success(f" Using '{class_column}' column as class labels.")
 
             with rasterio.open(raster_path) as src:
                 raster_crs = src.crs
@@ -122,4 +121,5 @@ if raster_file and shapefile_file:
         st.success("✅ Classification complete!")
 
 else:
+
     st.warning("📌 Please upload both raster and training shapefile (as .zip).")
