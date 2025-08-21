@@ -1,6 +1,0 @@
-streamlit
-numpy
-pandas
-rasterio
-fiona
-gdal
